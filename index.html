@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+            box-sizing: border-box;
+        } 
+        body{
+            height:100vh;
+            display:flex;
+            justify-content: center;
+            align-items:center ;
+            /* background-color:rgb(130, 128, 128); */
+            background-color: rgb(39, 38, 38);
+            overflow-x: auto; 
+            font-style:italic;
+        }
+        .outercontainer{
+            margin-top: 30px;
+            height: auto;
+            width:800px;
+            color: black;
+            background-color:rgb(174, 171, 171);;
+            text-align: center;
+            padding:30px;
+            border-radius: 10px;
+            box-shadow: inset -3px -3px 10px 3px white,inset 3px 3px 10px 3px white;
+            }
+        .headercontainer{
+            height:auto;
+            width:70%;
+            display:flex;
+            flex-direction: column;
+            border:2px solid black ;
+            justify-content: center;
+            align-items: center;
+            background-color:white;
+            color:black;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 20px;
+            /* box-shadow: inset -3px -3px 10px 3px white,inset 3px 3px 10px 3px white; */
+            display:none;
+            margin-left: 110px;
+            font-weight: bold;
+
+            
+        }
+        .headercontainer input{
+            width:75%;
+            height:30px;
+            margin:10px;
+            border-radius: 5px;
+            border:none;
+            padding:5px;
+            font-style: italic;
+            background-color: rgb(136, 135, 135);
+            color:white;
+            font-weight: bold;
+                        
+
+        }
+        .headercontainer heading{
+            position: fixed;
+            top:0;
+            overflow-y: scroll; 
+            position: fixed;
+            overflow-wrap: wrap;
+
+
+        }
+        .innercontainer{
+            display:flex;
+            padding:30px;
+            gap:10px;
+            font-size: 25px;
+            color:black;
+            /* overflow-y:scroll;  */
+           
+            
+        }
+        #personal{
+            width:50%;
+            display:flex;
+            flex-direction: column;
+            gap:15px;
+            font-size: 15px;
+            /* background-color: bisque; */
+        }
+        #personal h4{
+            font-size: 20px;
+            height:40px;
+            text-align: center;
+            background-color:black;
+            color:white;
+            border-radius: 5px;
+            padding-top:10px;
+            box-shadow: inset -2px -2px 3px 2px white,inset 2px 2px 3px 2px white;
+
+        }
+        #work h4{
+            font-size: 20px;
+            height:40px;
+            text-align: center;
+            background-color:black ;
+            color:white;
+            border-radius: 5px;
+            padding:10px;
+            /* margin:20px; */
+            box-shadow: inset -2px -2px 3px 2px white,inset 2px 2px 3px 2px white;
+        
+        }
+
+        #work{
+            width:50%;
+            display:flex;
+            flex-direction: column;
+            gap:15px;
+            font-size: 15px;
+        
+        }
+        .flexbutton{
+            display:flex;
+            gap:20px;
+            padding:10px;
+            
+        }
+        #personalbtn,#workbtn{
+            padding:5px;
+            border:none;
+            border-radius: 5px;
+            width:165px;
+            font-size: 15px;
+            font-weight: bold;
+            font-style: italic;
+            background-color: rgb(37, 35, 35);
+            color: beige;
+        }
+        .flexlable{
+            display:flex;
+            flex-direction: row;
+        }
+        .flexlable input{
+            width:50%;
+        }
+        .newdiv{
+            height:auto;
+            background-color:white;
+            border-radius: 5px;
+            color:black;
+            padding:10px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .btn{
+            padding:3px;
+            font-size:bold;
+            background-color: rgb(220, 109, 109);
+            border:none;
+            border-radius: 3px;
+            font-style: italic;
+            font-size: bold;
+            font-weight: bold;
+        
+        }
+        .prio{
+            background-color: rgb(189, 145, 231);
+            color:black;
+            font-weight: bold;
+        
+            }
+        .checkbox{
+            height:30px;
+            width:30px;
+            border-radius: 50%;
+            background-color: lightgreen;
+            border:1px solid black;
+            /* border: none; */
+        }
+        #addbtn{
+            background-color:black ;
+            color:white;
+            height:35px;
+            padding: 7px;
+            margin: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            box-shadow:inset -2px -2px 1px 1px white,inset 2px 2px 1px 1px white;
+            transition:3sec ease;
+            width:120px;
+            font-style: italic;
+        
+        }
+        .cancel{
+            height:30px;
+            width:30px;
+            position:fixed;
+            top:260px;
+            right:530px;
+        }
+        .headercontainer{
+            position: relative;
+        }
+        /* buttons{
+            }
+         */
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"  />
+</head>
+<body>
+    <div class="outercontainer">
+        <div class="heading">
+        <h1> <i class="fa-solid fa-list-check"></i> Todo list</h1>
+        <span><button id="addbtn">Add todo</button></span>
+        </div>
+        <div class="headercontainer">
+
+                <!-- <div class="flexlable"> -->
+                <lable for="input"> Title</lable>
+                <input type="text" id="input" placeholder="Title of the task">
+                <!-- </div> -->
+                <!-- <div class="flexlable"> -->
+                <lable for="disc">Discription</lable>
+                <input type="text" id="disc" placeholder="Discription of the task">
+                <!-- </div> -->
+                <!-- <div class="flexlable"> -->
+                <lable for="date">Day-Deadline</lable>
+                <input type="date" id="date">
+                <!-- </div> -->
+                <!-- <div class="flexlable"> -->
+                <lable for="time">time-Deadline</lable>
+                <input type="time" id="time">
+                <!-- </div> -->
+
+            <div class="flexbutton">
+            
+
+            <button id="personalbtn"><i class="fa-sharp-duotone fa-solid fa-buildings"></i>Add to personal</button>
+            <button id="workbtn"> Add to work</button>
+            <button class="cancel">X</button>
+            
+            </div>
+        </div>
+        <div class="innercontainer">
+            <div id="personal">
+                <h4>Personal Related</h4>
+            </div>
+            <div id="work">
+                <h4>Work Related</h4>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+            const add=document.getElementById("button");
+
+            const inputdata=document.getElementById("input");
+            const disc=document.getElementById("disc");
+            const date=document.getElementById("date");
+            const time=document.getElementById("time");
+            const headercontainer=document.querySelector(".headercontainer");
+            const addbtn=document.getElementById("addbtn");
+            const cancel=document.querySelector(".cancel");
+            const innercontainer=document.querySelector(".innercontainer")
+
+            addbtn.addEventListener("click",()=>{
+                headercontainer.style.display="flex"
+                innercontainer.style.display="none"
+                console.log("clcicked")
+            })
+            cancel.addEventListener("click",()=>{
+                console.log("cancelbtnclicked")
+                headercontainer.style.display="none"
+            })
+
+            const personal=document.getElementById("personal")
+            document.getElementById("personalbtn").onclick=()=>{addtodo(personal)}
+
+            const work=document.getElementById("work")
+            document.getElementById("workbtn").onclick=()=>addtodo(work)
+
+            function data(){
+                let usertodo=[{
+                task:inputdata.value,
+                discription:disc.value,
+                date:date.value,
+                time:time.value,
+                }]
+            
+                localStorage.setItem("usertodo",JSON.stringify(usertodo))
+                let storeddata=localStorage.getItem("usertodo")
+                let usertodo1=storeddata?JSON.parse(storeddata):[];
+                console.log(storeddata)
+                storedlist=[]
+                storedlist.push(usertodo1)
+                console.log(storedlist)
+            
+            }
+
+                    
+            
+            function addtodo(target){
+                headercontainer.style.display="none"
+                innercontainer.style.display="flex"
+
+
+                console.log("clcicked");
+                const newtodo=document.createElement("div");
+                newtodo.classList="newdiv"
+                let usertodo=[{
+                task:inputdata.value,
+                discription:disc.value,
+                date:date.value,
+                time:time.value,
+                },]
+            
+                const data=localStorage.setItem("usertodo",JSON.stringify(usertodo))
+                var storeddata=localStorage.getItem("usertodo")
+                var usertodo1=storeddata?JSON.parse(storeddata):[];
+                console.log(storeddata)
+                storedlist=[]
+                storedlist.push(usertodo)
+                
+                
+                usertodo1.map(({task,discription,date,time} )=>{
+                    
+                    newtodo.innerHTML=`
+                    
+                    <button class="checkbox" ><i class="fa-solid fa-check"></i></button>
+                    <p>Title: ${task}</p>
+                    
+                    <p>Discription: ${discription}</p>
+                    <p>Date-Deadline: ${date}</p>
+                    <p>Time-Deadline: ${time}</p>
+                    
+                    <button onclick="deletebutton(this)" class="btn">Delete</button>
+                    <select onchange="selectColor(this)" class="btn prio" id="color2">
+                        <option >Priority</option>
+                        <option id="green" onselect="selectgreen()">High</option>
+                        <option id="blue">Medium</option>
+                        <option id="yellow">Low</option>
+                    </select>
+                
+                    <p class="status">Status:---PENDING---</p>`
+                    
+
+
+                    target.appendChild(newtodo);
+                    inputdata.value="";
+                    disc.value="";
+                    time.value="";
+                    date.value="";
+                    
+                    var checkbox =document.querySelector(".checkbox")
+                    const statusSpan = newtodo.querySelector('.status');
+                   
+                    checkbox.addEventListener('click',()=> {
+                        // newtodo.style.backgroundColor="lightgreen"
+                        checkbox.style.backgroundColor="green"
+                        statusSpan.innerHTML="Status:---COMPLETED---"
+                    })
+               
+
+                    setTimeout(() => {
+                        newtodo.style.backgroundColor="red"
+                        }, 400000000);
+                    })
+                    
+            }
+                
+
+            const color2=document.getElementById("color")
+            function deletebutton(button) {
+            const todoItem = button.parentElement; 
+            todoItem.remove();
+            }
+
+            function checkbox(){
+                    
+            }
+
+            
+            function selectColor(select) {
+                const todoItem = select;
+                const color = select.value;
+                
+                if (color === "High") {
+                todoItem.style.backgroundColor = "orange";
+        
+                } else if (color === "Medium") {
+                    todoItem.style.backgroundColor = "lightblue";
+                } else if (color === "Low") {
+                    todoItem.style.backgroundColor = "lightpink";
+                } else {
+                    todoItem.style.backgroundColor = "white"; 
+                }
+
+            }   
+            </script>
+</body>
+</html>
